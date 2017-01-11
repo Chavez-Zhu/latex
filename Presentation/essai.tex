@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[color,notref,notcite]{showkeys}
+
+\usepackage[%
+backend=biber,
+style=ieee,
+]{biblatex}
+
+\DeclareRangeChars{~,;-+/{}} % add '{}' as page range delimiter
+
+\bibliography{../biblio2.bib}
+
+\DeclareFieldFormat{shortjournal}{#1}
+
+\AtEveryBibitem{%
+	\csappto{blx@bbx@\thefield{entrytype}}{% put at end of entry
+		\iffieldundef{shortjournal}{\space \textbf{No file!}}{%
+			\space \printfield{shortjournal}
+		}
+	}
+}
+
+\DeclareSourcemap{
+	\maps[datatype=bibtex]{
+		\map{
+			\step[fieldsource=mynote]
+			\step[fieldset=usera,origfieldval]
+		}
+	}
+}
+
+\DeclareFieldFormat{usera}{\textbf{#1}}
+
+\AtEveryBibitem{%
+	\csappto{blx@bbx@\thefield{entrytype}}{% put at end of entry
+		\iffieldundef{usera}{%
+			\space \textbf{No annotation!}}{%
+			\space\printfield{usera}
+		}
+	}
+}
+
+\usepackage[%
+colorlinks,
+unicode,
+breaklinks,
+]{hyperref}
+
+\begin{document}
+	
+	\nocite{*} % list all entries
+	
+	\printbibliography
+	
+\end{document}
