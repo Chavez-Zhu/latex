@@ -10,7 +10,7 @@
 \usepackage[skip=2pt,font=scriptsize,labelformat=empty]{caption} % Required for specifying captions to tables and figures
 \usepackage{pstricks}
 
-\title{Sujet de thèse :}
+\title{Apprendre par synchronie ?}
 \author{Fournier Pierre}
 
 \newrobustcmd*{\footlessfullcite}{\AtNextCite{\renewbibmacro{title}{}\renewbibmacro{in:}{}}\footfullcite}
@@ -19,15 +19,92 @@
 \begin{document}
 	\frame{\titlepage} 
 	
-	\frame{\frametitle{Table of contents}\tableofcontents} 
+	%\frame{\frametitle{Table of contents}\tableofcontents} 
 	
-	\section{Contexte}
+	\begin{frame}{Objectifs}
+		Etant donné un robot \textbf{autonome} en présence d'êtres humains, comment ces derniers peuvent susciter et guider l'apprentissage de \textbf{nouveaux comportements} par leur \textbf{interaction naturelle} avec le robot ?
+		
+		Deux cadres applicatifs :
+		\begin{itemize}
+			\item Personnalisation d'un robot de compagnie : apprentissage de jeux
+			\item Spécialisation d'un robot industriel : apprentissage de tâches
+		\end{itemize}
+		Pas de compétence informatique requise.
 	
-	\subsection{Robotique développementale}
+	\end{frame}
+	
+	\begin{frame}{Approche choisie}
+		\begin{columns}
+			\begin{column}{0.55\textwidth}
+				\includegraphics[width=\textwidth]{images/playroom.eps}
+			\end{column}
+			\begin{column}{0.45\textwidth}
+				\begin{itemize}
+					\item Robot modélisé par son attention et ses actions
+					\item Le tuteur intervient par son attention
+					\item But : orienter l'exploration autonome du robot vers une variation précise de la tâche (ex: blocs d'une couleur dans la boîte de la même couleur)
+				\end{itemize}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\section{Exploration autonome}
+	
+	\begin{frame}{L'exploration autonome }
+		But : découverte de séquences d'interactions pertinentes avec son environnement. 
+		Solution classique : Reinforcement learning, avec récompenses définies pour unedécouverte de séquences d'interactions pertinentes avec son environnement.  tâche.
+		Problème : plus les récompenses sont spécifiques, moins les compétences sont génériques.
+		Solution : Motivation intrinsèque, le robot définit lui-même et s'attribue des objectifs définissant ses récompenses, selon un principe indépendant de toute tâche (goal-babbling, curiosité artificielle...)
+		Le comportement exploratoire autonome du robot émerge de ce couplage entre RL et motivation intrinsèque, sans nécessité de récompenses ad hoc prédéfinies.
+		Références.
+	\end{frame}
+	\begin{frame}{Exploration autonome}
+		Objectif : découverte de séquences d'interactions pertinentes avec son environnement.
+		
+		Solution classique : RL. Des états de l'environnements sont "récompensants" et l'agent cherche un comportement décisionnel maximisant la récompense espérée.
+		
+		\begin{columns}
+			\begin{column}{0.45\textwidth}
+				\centering
+				\includegraphics[width=\textwidth]{images/RL1.eps}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				L'environnement ne fournit pas de récompense, et les définir a priori réduit l'adaptabilité du robot.
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Motivation intrinsèque}
+		Solution : Motivation intrinsèque, le robot définit lui-même et s'attribue des objectifs définissant ses récompenses, selon un principe indépendant de toute tâche (goal-babbling, curiosité artificielle...)
+		
+		Le comportement exploratoire autonome du robot émerge de ce couplage entre RL et motivation intrinsèque, sans nécessité de récompenses ad hoc prédéfinies.
+		Références.
+	\end{frame}
+	
+	\begin{frame}{Application au cadre expérimental}
+		Obect centered selection of actions
+		
+		??????????
+	\end{frame}
+	
+	\begin{frame}{Guidage de l'apprentissage vers une tâche spécifique}
+		Contexte : le robot interagit avec l'environnement selon un mécanisme non spécifique à une tâche.
+		Objectif : faire découvrir et valoriser la tâche souhaitée par le tuteur.
+		Hypothèse : la qualité de l'interaction (= degré de synchronie spatio-temporelle, joint engagement) est valorisée intrinsèquement et très tôt par les enfants. 
+		Exploitation de l'hypothèse : faire de cette qualité une origine de renforcement supplémentaire (comment ?) et observer les effets sur l'orientation de l'apprentissage.
+	\end{frame}
+	
+	\begin{frame}{Related work}
+		Interactive machine learning : imitation d'une démonstration, suivi d'une instruction. Requiert un protocole prédéfini d'apprentissage, l'interaction n'est qu'un moyen.
+		
+		Distinction labeled unlabeled guidance : le robot doit extraire une interprétation non évidente de l'interaction. Comment deviner que tel geste de la main est un renforcement ? Chez nous, l'interprétation est un side effect de l'amélioration de la qualité ? Modèle bayésien de l'interprétation chez Anis, chez nous l'interprétation est intégrée au protocole de découverte par RL ?
+		
+		Motivation par l'interaction : rythme comme motivation (Gaussier), imitation par la synchronie temporelle. Nous synchronie plus générale potentiellement.
+	\end{frame}
 	
 	\begin{frame}{La robotique développementale}
 		\begin{block}{Un robot peut-il apprendre comme un enfant ?}
-			 Comment faire émerger des compétences cognitives avancées de son interaction avec l'environnement ?
+			 Privilégier l'apprentissage de compétences bas niveau et mettre en place une architecture structurée permettant la progression autonome.
 		\end{block}
 		\begin{columns}
 			\begin{column}{0.45\textwidth}
@@ -73,41 +150,7 @@
 	
 	\subsection{Intrinsically motivated reinforcement learning}
 	
-	\begin{frame}{Quel mécanisme d'apprentissage ?}
-		\begin{block}{Apprentissage par renforcement}
-			L'agent cherche un comportement décisionnel maximisant les \og récompenses \fg{} fournies par son environnement.
-		\end{block}
-		\begin{columns}
-			\begin{column}{0.45\textwidth}
-				\centering
-				\includegraphics[width=\textwidth]{images/RL1.eps}
-			\end{column}
-			\begin{column}{0.5\textwidth}
-				\begin{exampleblock}{L'origine des récompenses}
-					L'environnement lui-même ne fournit que très rarement des \og récompense \fg{} (ex: douleur). 
-				\end{exampleblock}
-			\end{column}
-		\end{columns}
-	\end{frame}
 	
-	\begin{frame}{Motivation intrinsèque}
-		\begin{block}{Une récompense interne}
-			L'agent définit lui-même et s'attribue des objectifs définissant des récompenses.
-		\end{block}
-		\begin{columns}
-			\begin{column}{0.5\textwidth}
-				\begin{exampleblock}{Quelle origine ?}
-					\begin{itemize}
-						\item \emph{Goal-babbling}
-						\item Curiosité artificielle : surprise, compétence, représentation...
-					\end{itemize}
-				\end{exampleblock}
-			\end{column}
-			\begin{column}{0.35\textwidth}
-				\includegraphics[width=\textwidth]{images/modele_imrl.eps}
-			\end{column}
-		\end{columns}
-	\end{frame}
 	
 	\section{Positionnement de la thèse}
 
@@ -141,7 +184,7 @@
 		\begin{block}{Constat chez les enfants}
 			L'interaction elle-même semble être valorisée indépendamment de son objet : aide spontanée, reproduction d'un jeu une fois appris, etc.
 		\end{block}
-		\begin{exampleblock}{Question}
+		\begin{exampleblock}{But des expériences futures}
 			En attribuant au sein du mécanisme de motivation intrinsèque une valeur positive à la synchronie entre agent et tuteur, est-il possible de guider l'exploration autonome dans la direction manifestée par les actions du tuteur ? 
 		\end{exampleblock}
 	\end{frame}
@@ -149,12 +192,21 @@
 	\subsection{Cadre actuel}
 	
 	\begin{frame}{Cadre de travail actuel}
-		\begin{block}{Constat chez les enfants}
-			L'interaction elle-même semble être valorisée indépendamment de son objet : aide spontanée, reproduction d'un jeu une fois appris, etc.
-		\end{block}
-		\begin{exampleblock}{Question}
-			En attribuant au sein du mécanisme de motivation intrinsèque une valeur positive à la synchronie entre agent et tuteur, est-il possible de guider l'exploration autonome dans la direction manifestée par les actions du tuteur ? 
-		\end{exampleblock}
+		\begin{columns}
+			\begin{column}{0.55\textwidth}
+				\includegraphics[width=\textwidth]{images/playroom.eps}
+			\end{column}
+			\begin{column}{0.45\textwidth}
+				\begin{block}{Synchrony-based guidance ?}
+					\begin{itemize}
+						\item Espace discrétisé
+						\item Agent \& Tuteur : regard, intention, action
+						\item Des boîtes et des blocs à ranger
+						\item Un interrupteur nécessaire pour distinguer les couleurs
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
 	\end{frame}
 
 \end{document}
