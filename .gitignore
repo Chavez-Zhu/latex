@@ -26,3 +26,5 @@
 # BibTeX
 *.bbl
 *.blg
+
+*.idea/
